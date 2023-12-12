@@ -1,0 +1,20 @@
+{
+  "name": "geralt",
+  "version": "1.0.0",
+  "description": "Logan's base api project",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Logan Schiessle",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.0.3",
+    "nodemon": "^3.0.2"
+  }
+}
