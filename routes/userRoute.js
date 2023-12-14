@@ -1,9 +1,17 @@
 import express from 'express';
-import { User } from '../models/user-model.js';
+import { loginRequired, profile, register, signIn } from '../controllers/userController.js';
+import User from '../models/userModel.js';
 
 const router = express.Router();
 
 const userRoute = '/user';
+
+router.route('/tasks')
+    .post(loginRequired, profile);
+router.route('/auth/register')
+    .post(register);
+router.route('/auth/signin')
+    .post(signIn);
 
 /**
  * Get all Users
@@ -61,6 +69,6 @@ router.delete(`${userRoute}/:id`, async (req, res) => {
     catch (error) {
         res.status(400).json({ message: error.message })
     }
-})
+});
 
 export default router;
