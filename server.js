@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import router from './routes/userRoute.js';
 import bodyParser from 'body-parser';
-import jsonwebtoken from 'jsonwebtoken';
+import { authorizeJWT } from './middleware/authMiddleware.js';
 
 dotenv.config();
 
@@ -28,18 +28,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(function(req, res, next) {
-  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
-    jsonwebtoken.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET, function(err, decode) {
-      if (err) req.user = undefined;
-      req.user = decode;
-      next();
-    });
-  } else {
-    req.user = undefined;
-    next();
-  }
-});
+app.use(authorizeJWT);
 
 app.use('/api', router);
 

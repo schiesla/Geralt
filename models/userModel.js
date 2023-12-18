@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import bcrypt from 'bcrypt';
+import { comparePasswords } from '../utils/encryption.js';
 
 const user = new Schema({
     name: {
@@ -29,7 +29,7 @@ user.methods = {
      * @returns does the hash of the plain text match the hashed pass?
      */
     comparePassword(password) {
-        return bcrypt.compareSync(password, this.hash_password);
+        return comparePasswords(password, this.hash_password);
     }
 }
 

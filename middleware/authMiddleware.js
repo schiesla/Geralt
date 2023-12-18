@@ -1,4 +1,4 @@
-import jsonwebtoken from 'jsonwebtoken';
+import { verifyToken } from "../utils/token.js";
 
 /**
  * Grab the JWT from the auth header and verify it.
@@ -12,11 +12,11 @@ export async function authorizeJWT(req, res, next) {
             return next();
         }
         const jwt = req.headers.authorization.split(' ')[1];
-        const decode = await jsonwebtoken.verify(jwt, process.env.JWT_SECRET);
+        const decode = await verifyToken(jwt);
         req.user = decode;
         next();
     } catch (err) {
         req.user = undefined;
         next();
     }
-  }
+}
