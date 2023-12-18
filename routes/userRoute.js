@@ -1,48 +1,23 @@
 import express from 'express';
-import { loginRequired, profile, register, signIn } from '../controllers/userController.js';
+import { loginRequired, profile } from '../controllers/authController.js';
+import { all, oneById } from '../controllers/userController.js';
 import User from '../models/userModel.js';
 
-const router = express.Router();
+const userRoute = express.Router();
 
-const userRoute = '/user';
+const route = (routeUrl) => userRoute.route(routeUrl);
 
-router.route('/tasks')
+userRoute.route('/tasks')
     .post(loginRequired, profile);
-router.route('/auth/register')
-    .post(register);
-router.route('/auth/signin')
-    .post(signIn);
 
-/**
- * Get all Users
- */
-router.get(userRoute, async (req, res) => {
-    try{
-        const data = await User.find();
-        res.json(data);
-    }
-    catch(error){
-        res.status(500).json({message: error.message});
-    }
-});
 
-/**
- * Get User by ID
- */
-router.get(`${userRoute}/:id`, async (req, res) => {
-    try {
-        const data = await User.findById(req.params.id);
-        res.json(data);
-    }
-    catch(error) {
-        res.status(500).json({message: error.message});
-    }
-});
+route("").get(all);
+route(`/:id`).get(oneById);
 
 /**
  * Create new User
  */
-router.post(userRoute, async (req, res) => {
+userRoute.post("", async (req, res) => {
     const data = new User({
         name: req.body.name,
         email: req.body.email,
@@ -60,7 +35,7 @@ router.post(userRoute, async (req, res) => {
 /**
  * Delete User by ID
  */
-router.delete(`${userRoute}/:id`, async (req, res) => {
+userRoute.delete(`/:id`, async (req, res) => {
     try {
         const id = req.params.id;
         const data = await User.findByIdAndDelete(id);
@@ -71,4 +46,4 @@ router.delete(`${userRoute}/:id`, async (req, res) => {
     }
 });
 
-export default router;
+export default userRoute;

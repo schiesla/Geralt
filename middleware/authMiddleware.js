@@ -2,14 +2,15 @@ import { verifyToken } from "../utils/token.js";
 
 /**
  * Grab the JWT from the auth header and verify it.
- * Either pass on the user as req.user, or set that value as undefined.
+ * Either pass on the user as req.user, or throw an error.
  */
 export async function authorizeJWT(req, res, next) {
     try {
         const hasJwt = req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT';
         if (!hasJwt) {
-            req.user = undefined;
-            return next();
+            const err = Error("No Session Found!");
+            err.status = 401
+            throw err;
         }
         const jwt = req.headers.authorization.split(' ')[1];
         const decode = await verifyToken(jwt);
@@ -17,6 +18,6 @@ export async function authorizeJWT(req, res, next) {
         next();
     } catch (err) {
         req.user = undefined;
-        next();
+        next(err);
     }
 }
