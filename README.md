@@ -1,4 +1,4 @@
-# Geralt
+# Geralt locally
 - `npm install`
 - `npm start` to run
 

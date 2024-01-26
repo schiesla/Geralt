@@ -1,14 +1,9 @@
-import express from 'express';
-import { User } from '../models/user-model.js';
-
-const router = express.Router();
-
-const userRoute = '/user';
+import User from '../models/userModel.js';
 
 /**
  * Get all Users
  */
-router.get(userRoute, async (req, res) => {
+export async function all(req, res) {
     try{
         const data = await User.find();
         res.json(data);
@@ -16,12 +11,12 @@ router.get(userRoute, async (req, res) => {
     catch(error){
         res.status(500).json({message: error.message});
     }
-});
+}
 
 /**
  * Get User by ID
  */
-router.get(`${userRoute}/:id`, async (req, res) => {
+export async function oneById(req, res) {
     try {
         const data = await User.findById(req.params.id);
         res.json(data);
@@ -29,12 +24,12 @@ router.get(`${userRoute}/:id`, async (req, res) => {
     catch(error) {
         res.status(500).json({message: error.message});
     }
-});
+}
 
 /**
  * Create new User
  */
-router.post(userRoute, async (req, res) => {
+export async function newUser(req, res) {
     const data = new User({
         name: req.body.name,
         email: req.body.email,
@@ -47,12 +42,12 @@ router.post(userRoute, async (req, res) => {
     catch (error) {
         res.status(400).json({message: error.message})
     }
-});
+}
 
 /**
  * Delete User by ID
  */
-router.delete(`${userRoute}/:id`, async (req, res) => {
+export async function removeOne(req, res) {
     try {
         const id = req.params.id;
         const data = await User.findByIdAndDelete(id);
@@ -61,6 +56,4 @@ router.delete(`${userRoute}/:id`, async (req, res) => {
     catch (error) {
         res.status(400).json({ message: error.message })
     }
-})
-
-export default router;
+}
