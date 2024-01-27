@@ -19,7 +19,7 @@ mongoose.connect(mongoString, option);
 const database = mongoose.connection;
 
 database.on('error', (error) => {
-  console.log(error)
+  console.log('error connecting:', {error, mongoString, option});
 });
 
 database.once('connected', () => {
