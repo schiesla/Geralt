@@ -9,8 +9,9 @@ import { authorizeJWT } from './middleware/authMiddleware.js';
 
 // dotenv.config();
 
-const mongoString = process.env.DATABASE_URL;
+const mongoString = /** process.env.DATABASE_URL; */ "mongodb+srv://schizzle27:arHfmWmCwSEo1ixs@rivia.8npxslx.mongodb.net/";
 const option = {
+  dbName: 'testDatabase',
   socketTimeoutMS: 30000
 };
 

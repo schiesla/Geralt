@@ -1,7 +1,5 @@
 FROM node:17.3.0
 
-ENV DATABASE_URL=mongodb+srv://schizzle27:arHfmWmCwSEo1ixs@rivia.8npxslx.mongodb.net/testDatabase JWT_SECRET=temporary_but_VERY_secret
-
 # This instructs Docker to use this path as the default location for all subsequent commands
 WORKDIR /app
 
