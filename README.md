@@ -13,3 +13,7 @@ NOTE: for ports -> [host port]:[container port]
 - To stop: `docker stop geralt-api` (you can also supply a container ID found listed in the `ps` command)
 - To remove container: `docker rm geralt-api`
 - To log container: `docker logs geralt-api` add `-f` to follow them live
+
+# UpCloud -> Atlas
+In order to get the api hosted on upcloud connected with the db on atlas,
+I had to ensure atlas whitelists the public IP for the server. I also had to add --network=host onto the docker build command. Postman call also has to be http.
