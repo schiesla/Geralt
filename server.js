@@ -6,6 +6,7 @@ import userRoute from './routes/userRoute.js';
 import authRoute from './routes/authRoute.js';
 import bodyParser from 'body-parser';
 import { authorizeJWT } from './middleware/authMiddleware.js';
+import cors from 'cors';
 
 // dotenv.config();
 
@@ -27,6 +28,9 @@ database.once('connected', () => {
 });
 
 const app = express();
+app.use(cors({
+  origin: 'https://schiessles.com'
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
